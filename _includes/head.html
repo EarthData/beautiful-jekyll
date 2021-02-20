@@ -23,6 +23,21 @@
     {%- endif -%}
   {% endcapture %}
 
+  {%- assign keywords = '' | split: '' -%}
+  {%- if page.tags.size > 0 -%}
+    {%- assign keywords = keywords | concat: page.tags -%}
+  {%- endif -%}
+  {%- if page.categories.size > 0 -%}
+    {%- assign keywords = keywords | concat: page.categories -%}
+  {%- endif -%}
+  {%- if page.persons -%}
+    {%- assign persons = page.persons | split: ", " -%}
+    {%- assign keywords = keywords | concat: persons -%}
+  {%- endif -%}
+  {%- assign keywords = keywords | join: "," -%}
+
+  <title>{{ keywords }}</title>
+
   <title>{{ title }}</title>
 
   {% if site.author %}
@@ -30,6 +45,7 @@
   {% endif %}
 
   <meta name="description" content="{{ description }}">
+  <meta name="keywords" content="{{ keywords }}">
 
   {% if site.mobile-theme-col %}
   <meta name="theme-color" content="{{ site.mobile-theme-col }}">
